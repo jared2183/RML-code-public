@@ -11,8 +11,8 @@ class NetworkGcodeGenerator:
     # uses speed pressure mappings to find h, meander spacing, and layer spacing and add to input excel file
     def add_print_variables(self, inpath):
         # mapping paths for the two materials ordered by material index
-        mapping_paths = ["Gcode Generator/utils/materialData/neatLCE_speed_pressure_mappings.csv",
-                         "Gcode Generator/utils/materialData/azoLCE_speed_pressure_mappings.csv"]
+        mapping_paths = ["Gcode Generator/utils/materialData/material1_speed_pressure_mappings.csv",
+                         "Gcode Generator/utils/materialData/material2_speed_pressure_mappings.csv"]
 
         mapping_dfs = [pd.read_csv(mapping_path) for mapping_path in mapping_paths]
         df = pd.read_excel(io=inpath, sheet_name=['Nodes','Edges']) # reads in the two sheets of the excel file
@@ -66,7 +66,7 @@ class NetworkGcodeGenerator:
             node_df.to_excel(writer, sheet_name='Nodes', index=False)
             edge_df.to_excel(writer, sheet_name='Edges', index=False)
 
-    # generates the gcode to print the LCE active/passive network
+    # generates the gcode to print the active/passive network
     def generate_network_gcode(self, inpath, outpath, view=False): 
         self.add_print_variables(inpath)    # generates print parameters 
         df = pd.read_excel(inpath,['Nodes','Edges']) # reads in the two sheets of the excel file
